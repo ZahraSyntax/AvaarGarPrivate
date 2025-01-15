@@ -32,6 +32,10 @@ public void PlayGame(){
         SceneManager.LoadScene(6);
     }
 
+    public void MoreScene(){
+        SceneManager.LoadScene(7);
+    }
+
     public void ExitGame(){
         Application.Quit();
     }
