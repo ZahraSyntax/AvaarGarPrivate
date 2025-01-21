@@ -54,9 +54,13 @@ private void HandlePinCollision(int stageIndex)
     {
         int pinScore = pinScores[stageIndex];
 
-        PlayerPrefs.SetInt("Level" + (stageIndex + 1) + "Score", PlayerPrefs.GetInt("Level" + (stageIndex + 1) + "Score", 0) + pinScore);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int maxScoreForLevel = targetScores[currentSceneIndex - 1];
+        int currentScore = PlayerPrefs.GetInt("Level" + currentSceneIndex + "Score", 0);
+        int newScore = Mathf.Min(currentScore + pinScore, maxScoreForLevel);
 
-        currentLevelScore = PlayerPrefs.GetInt("Level" + (stageIndex + 1) + "Score", 0);
+        PlayerPrefs.SetInt("Level" + currentSceneIndex + "Score", newScore);
+        currentLevelScore = newScore;
 
         GameObject.FindGameObjectWithTag("Poing").GetComponent<TextMeshProUGUI>().text = $"Level Score: {currentLevelScore}";
         _done = true;
@@ -66,12 +70,16 @@ private void HandlePinCollision(int stageIndex)
 }
 
 
+
     private void CheckAndLoadNextLevel()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
         if (currentSceneIndex >= 1 && currentSceneIndex <= targetScores.Length)
         {
+            Debug.Log("Current Level Score: " + currentLevelScore);
+            Debug.Log("Target Score for this level: " + targetScores[currentSceneIndex - 1]);
+
             if (currentLevelScore >= targetScores[currentSceneIndex - 1])
             {
                 LoadNextLevel();

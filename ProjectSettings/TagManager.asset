@@ -18,6 +18,7 @@ TagManager:
   - Lock3
   - Lock4
   - Lock5
+  - Floor
   layers:
   - Default
   - TransparentFX
