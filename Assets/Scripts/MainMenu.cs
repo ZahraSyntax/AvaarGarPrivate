@@ -39,4 +39,11 @@ public void PlayGame(){
     public void ExitGame(){
         Application.Quit();
     }
+
+    public void BackToLevel1()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(1);
+    }
 }
